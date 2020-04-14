@@ -5,46 +5,44 @@ Sa se extraga cuvintele din text si apoi sa se afiseze alfabetic. Daca un cuvant
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <conio.h>
+
+
+void ordonare_alfab_sir(char s[])
+{
+	int i = 0, j, n;
+	char a[50][20], aux[50], *c, sep[] = " ,.;!\n";
+	c = strtok(s, sep);
+
+	while (c != NULL)
+	{
+		strcpy(a[i], c);
+		i++;
+		c = strtok(NULL, sep);
+	}
+
+	n = i;
+	for (i = 0;i < n - 1;i++)
+		for (j = i + 1;j < n;j++)
+			if (strcmp(a[i], a[j]) > 0) {
+				strcpy(aux, a[i]);
+				strcpy(a[i], a[j]);
+				strcpy(a[j], aux);
+			}
+
+	for (i = 0;i < n;i++)
+		printf("%s\n", a[i]);
+}
 
 int main()
 {
-	char text[100], *p, separator[] = " ,.;!", cuv[10][10], aux[10];
-	int i, k, n;
-	printf("Introduceti textul\n");
-	fgets(text, 100, stdin);
-	text[strlen(text) - 1] = NULL;
-	p = strtok(text, separator);
-	i = 0; n = 0;
-	while (p)
-	{
-		strcpy(cuv[i], p);
-		i++;
-		n++;
-		p = strtok(NULL, separator);
-	}
-	printf("Textul este format din urmatoarele cuvinte: \n");
-	for (i = 0;i < n;i++)
-		printf("%s ", cuv[i]);
-	printf("\n");
-	do
-	{
-		k = 1;
-		for (i = 1;i < n;i++)
-			if (strcmp(cuv[i - 1], cuv[i]) > 0)
-			{
-				strcpy(aux, cuv[i - 1]);
-				strcpy(cuv[i - 1], cuv[i]);
-				strcpy(cuv[i], aux);
-				k = 0;
-			}
-
-	} while (!k);
-	printf("Cuvintele ordonate alfabetic: \n");
-	for (i = 0;i < n;i++)
-		printf("%s ", cuv[i]);
-
+	char sir[100];
+	printf("Introduceti sirul \n");
+	fflush(stdin);
+	gets(sir);
+	printf("Sirul ordonat este: \n");
+	ordonare_alfab_sir(sir);
 	system("pause");
 	return 0;
 }
